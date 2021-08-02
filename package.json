@@ -4,7 +4,8 @@
   "main": "src/server.ts",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon"
+    "dev": "nodemon",
+    "test": "jest"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
