@@ -1,9 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
-import UserService from '../service/UserServices';
-import PrismaUser from '../repositories/PrismaUser';
+import userService from '../service/UserServices';
 
-const userService = new UserService(PrismaUser);
 class UserController {
   async create(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
     const { name, email, password } = req.body;
@@ -18,4 +16,4 @@ class UserController {
   }
 }
 
-export default new UserController();
+export default UserController;
