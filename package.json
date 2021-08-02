@@ -1,0 +1,11 @@
+{
+  "name": "easy-travel-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^16.4.10",
+    "sucrase": "^3.20.0",
+    "typescript": "^4.3.5"
+  }
+}
