@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+/* eslint-disable no-undef */
 import IUsersRepository from '../repositories/IUserRepository';
 import UserServices from './UserServices';
 import UserRepository from '../repositories/InMemoryUser';
@@ -35,5 +35,3 @@ describe('User Services', () => {
     expect(await userService.createUser(userData)).toEqual('User already exists!');
   });
 });
-=======
->>>>>>> parent of e613704 (passed test for create a user)
