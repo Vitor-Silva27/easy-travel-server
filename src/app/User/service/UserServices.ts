@@ -8,17 +8,16 @@ class UserService {
     this.repository = repository;
   }
 
-  async createUser({ name, email, password }: User): Promise<User> {
+  async createUser({ name, email, password }: User): Promise<User | string> {
     const userAlreadyExists = await this.repository.exists(email);
 
     if (userAlreadyExists) {
-      throw new Error('User already exists!');
-    } else {
-      const passwordHash = await this.hashPassword(password);
-
-      const user = this.repository.create({ name, email, password: passwordHash });
-      return user;
+      return 'User already exists!';
     }
+    const passwordHash = await this.hashPassword(password);
+
+    const user = await this.repository.create({ name, email, password: passwordHash });
+    return user;
   }
 
   public async hashPassword(password: string): Promise<string> {

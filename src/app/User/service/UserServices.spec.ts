@@ -22,4 +22,15 @@ describe('User Services', () => {
 
     expect(user).toHaveProperty('id');
   });
+
+  it('should not be able to create a user', async () => {
+    const userData: User = {
+      name: 'test name',
+      email: 'test@test.com',
+      password: '123456',
+    };
+    await userService.createUser(userData);
+
+    expect(await userService.createUser(userData)).toEqual('User already exists!');
+  });
 });

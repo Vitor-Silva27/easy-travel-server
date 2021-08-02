@@ -1,4 +1,7 @@
 node_modules
+# Ignore test-related files
+/coverage.data
+/coverage/
+coverage
 # Keep environment variables out of version control
 .env
-coverage
