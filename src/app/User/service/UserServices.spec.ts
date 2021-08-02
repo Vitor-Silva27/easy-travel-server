@@ -34,4 +34,16 @@ describe('User Services', () => {
 
     expect(await userService.createUser(userData)).toEqual('User already exists!');
   });
+
+  it('should return an array of users', async () => {
+    const userData: User = {
+      name: 'test name',
+      email: 'test@test.com',
+      password: '123456',
+    };
+    await userService.createUser(userData);
+    const users = userService.findUsers();
+
+    expect(typeof (users)).toEqual('object');
+  });
 });

@@ -20,7 +20,12 @@ class UserService {
     return user;
   }
 
-  public async hashPassword(password: string): Promise<string> {
+  async findUsers(): Promise<User[]> {
+    const users = await this.repository.findAllUsers();
+    return users;
+  }
+
+  private async hashPassword(password: string): Promise<string> {
     const hash = hashSync(password, 10);
     return hash;
   }

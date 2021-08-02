@@ -22,6 +22,11 @@ class PrismaUserRepository implements IUsersRepository {
     });
     return !!userExists;
   }
+
+  async findAllUsers(): Promise<User[]> {
+    const users = await prisma.user.findMany();
+    return users;
+  }
 }
 
 export default new PrismaUserRepository();

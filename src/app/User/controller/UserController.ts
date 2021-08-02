@@ -16,6 +16,12 @@ class UserController {
 
     return res.json(user);
   }
+
+  async findAllUsers(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
+    const users = await userService.findUsers();
+
+    return res.json(users);
+  }
 }
 
 export default new UserController();

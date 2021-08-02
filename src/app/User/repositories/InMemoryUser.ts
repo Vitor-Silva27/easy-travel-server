@@ -17,6 +17,10 @@ class UserRepository {
       const user = this.users.some((existingUser) => existingUser.email === email);
       return user;
     }
+
+    async findAllUsers(): Promise<User[]> {
+      return this.users;
+    }
 }
 
 export default UserRepository;
