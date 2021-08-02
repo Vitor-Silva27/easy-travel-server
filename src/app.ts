@@ -1,4 +1,7 @@
 import express from 'express';
+import routes from './routes';
+
+import 'dotenv/config';
 
 class App {
   public express: express.Application;
@@ -14,7 +17,7 @@ class App {
   }
 
   private routes(): void {
-    this.express.get('/', (req, res) => res.send('hello'));
+    this.express.use(routes);
   }
 }
 
