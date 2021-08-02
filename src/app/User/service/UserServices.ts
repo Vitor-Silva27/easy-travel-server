@@ -1,19 +1,24 @@
 import { hashSync } from 'bcryptjs';
-import PrismaUserRepository from '../repositories/PrismaUser';
+import IUsersRepository from '../repositories/IUserRepository';
 import User from '../UserEntity';
 
 class UserService {
-  async createUser({ name, email, password }: User): Promise<User> {
-    const passwordHash = await this.hashPassword(password);
+  // eslint-disable-next-line no-useless-constructor
+  constructor(private repository: IUsersRepository) {
+    this.repository = repository;
+  }
 
-    const userAlreadyExists = PrismaUserRepository.exists(email);
+  async createUser({ name, email, password }: User): Promise<User> {
+    const userAlreadyExists = await this.repository.exists(email);
 
     if (userAlreadyExists) {
       throw new Error('User already exists!');
-    }
+    } else {
+      const passwordHash = await this.hashPassword(password);
 
-    const user = PrismaUserRepository.create({ name, email, password: passwordHash });
-    return user;
+      const user = this.repository.create({ name, email, password: passwordHash });
+      return user;
+    }
   }
 
   public async hashPassword(password: string): Promise<string> {
@@ -22,4 +27,4 @@ class UserService {
   }
 }
 
-export default new UserService();
+export default UserService;

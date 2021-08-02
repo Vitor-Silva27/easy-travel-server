@@ -21,6 +21,7 @@ module.exports = {
   rules: {
     'no-console': 'off',
     'class-methods-use-this': 'off',
+    'no-undef': 'off',
     'import/extensions': [
       'error',
       'ignorePackages',
