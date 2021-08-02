@@ -5,6 +5,7 @@ interface IUsersRepository {
   create(user: User): Promise<User>;
   exists(email: string): Promise<boolean>;
   findAllUsers(): Promise<User[]>
+  findUserById(id: string): Promise<User>
 }
 
 export default IUsersRepository;

@@ -25,6 +25,11 @@ class UserService {
     return users;
   }
 
+  async findUserById(id: string): Promise<User> {
+    const user = await this.repository.findUserById(id);
+    return user;
+  }
+
   private async hashPassword(password: string): Promise<string> {
     const hash = hashSync(password, 10);
     return hash;

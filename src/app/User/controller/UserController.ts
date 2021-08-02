@@ -22,6 +22,13 @@ class UserController {
 
     return res.json(users);
   }
+
+  async findUserById(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
+    const { id } = req.params;
+    const user = await userService.findUserById(id);
+
+    return res.json(user);
+  }
 }
 
 export default new UserController();

@@ -21,6 +21,10 @@ class UserRepository {
     async findAllUsers(): Promise<User[]> {
       return this.users;
     }
+
+    async findUserById(id: string): Promise<User> {
+      return this.users.find((user) => user.id === id);
+    }
 }
 
 export default UserRepository;
