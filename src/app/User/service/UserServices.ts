@@ -1,6 +1,6 @@
 import { hashSync } from 'bcryptjs';
-import PrismaUserRepository from './repositories/PrismaUser';
-import User from './UserEntity';
+import PrismaUserRepository from '../repositories/PrismaUser';
+import User from '../UserEntity';
 
 class UserService {
   async createUser({ name, email, password }: User): Promise<User> {
