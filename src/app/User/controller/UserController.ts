@@ -29,6 +29,13 @@ class UserController {
 
     return res.json(user);
   }
+
+  async deleteUser(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
+    const { id } = req.params;
+    const user = await userService.deleteUser(id);
+
+    return res.json(user);
+  }
 }
 
 export default new UserController();

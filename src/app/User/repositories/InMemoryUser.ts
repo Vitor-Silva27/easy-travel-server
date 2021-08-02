@@ -25,6 +25,13 @@ class UserRepository {
     async findUserById(id: string): Promise<User> {
       return this.users.find((user) => user.id === id);
     }
+
+    async deleteUser(id: string): Promise<User> {
+      const userSelected = this.users.find((user) => user.id === id);
+      const index = this.users.indexOf(userSelected);
+      const user = this.users.splice(index, 1);
+      return user[0];
+    }
 }
 
 export default UserRepository;

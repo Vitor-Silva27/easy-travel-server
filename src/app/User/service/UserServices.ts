@@ -30,6 +30,11 @@ class UserService {
     return user;
   }
 
+  async deleteUser(id: string): Promise<User> {
+    const user = await this.repository.deleteUser(id);
+    return user;
+  }
+
   private async hashPassword(password: string): Promise<string> {
     const hash = hashSync(password, 10);
     return hash;
