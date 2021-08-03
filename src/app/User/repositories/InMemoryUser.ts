@@ -22,20 +22,21 @@ class UserRepository {
       return this.users;
     }
 
-    async findUserById(id: string): Promise<User> {
-      return this.users.find((user) => user.id === id);
+    async findOneUser(username: string): Promise<User> {
+      return this.users.find((user) => user.username === username);
     }
 
-    async deleteUser(id: string): Promise<User> {
-      const userSelected = this.users.find((user) => user.id === id);
+    async deleteUser(username: string): Promise<User> {
+      const userSelected = this.users.find((user) => user.username === username);
       const index = this.users.indexOf(userSelected);
       const user = this.users.splice(index, 1);
       return user[0];
     }
 
-    async updateUser({ id, email, name }: User): Promise<User> {
-      const userSelected = this.users.find((user) => user.id === id);
+    async updateUser(username: string, email: string, name:string): Promise<User> {
+      const userSelected = this.users.find((user) => user.username === username);
       const index = this.users.indexOf(userSelected);
+      this.users[index].username = username;
       this.users[index].email = email;
       this.users[index].name = name;
       const user = this.users[index];

@@ -16,6 +16,7 @@ describe('User Services', () => {
   it('should be able to create a user', async () => {
     const userData: User = {
       name: 'test name',
+      username: 'testuser',
       email: 'test@test.com',
       password: '123456',
     };
@@ -27,6 +28,7 @@ describe('User Services', () => {
   it('should not be able to create a user', async () => {
     const userData: User = {
       name: 'test name',
+      username: 'testuser',
       email: 'test@test.com',
       password: '123456',
     };

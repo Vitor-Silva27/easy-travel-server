@@ -4,11 +4,14 @@ import IUsersRepository from './IUserRepository';
 import prisma from '../../../database/client';
 
 class PrismaUserRepository implements IUsersRepository {
-  async create({ name, email, password }: User): Promise<User> {
+  async create({
+    name, username, email, password,
+  }: User): Promise<User> {
     const passwordHash = await this.hashPassword(password);
     const user = prisma.user.create({
       data: {
         name,
+        username,
         email,
         password: passwordHash,
       },
@@ -30,39 +33,36 @@ class PrismaUserRepository implements IUsersRepository {
     return users;
   }
 
-  async findUserById(id: string): Promise<User> {
+  async findOneUser(username: string): Promise<User> {
     const user = await prisma.user.findUnique({
       where: {
-        id,
+        username,
       },
     });
     return user;
   }
 
-  async deleteUser(id: string): Promise<User> {
+  async deleteUser(username: string): Promise<User> {
     const user = await prisma.user.delete({
       where: {
-        id,
+        username,
       },
     });
     return user;
   }
 
-  async updateUser(id: string, name: string, email: string): Promise<User> {
+  async updateUser(name: string, username: string, email: string): Promise<User> {
     const user = await prisma.user.update({
       where: {
-        id,
+        username,
       },
       data: {
         name,
+        username,
         email,
       },
     });
     return user;
-  }
-
-  async authenticate() {
-
   }
 
   private async hashPassword(password: string): Promise<string> {

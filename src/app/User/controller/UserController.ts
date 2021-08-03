@@ -6,10 +6,13 @@ import prismaUser from '../repositories/PrismaUser';
 const userService = new UserService(prismaUser);
 class UserController {
   async create(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
-    const { name, email, password } = req.body;
+    const {
+      name, username, email, password,
+    } = req.body;
 
     const user = await userService.createUser({
       name,
+      username,
       email,
       password,
     });
@@ -23,30 +26,38 @@ class UserController {
     return res.json(users);
   }
 
-  async findUserById(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
-    const { id } = req.params;
-    const user = await userService.findUserById(id);
+  async findOneUser(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
+    const { username } = req.params;
+    const user = await userService.findOneUser(username);
 
     return res.json(user);
   }
 
   async deleteUser(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
-    const { id } = req.params;
-    const user = await userService.deleteUser(id);
+    const { username } = req.params;
+    const user = await userService.deleteUser(username);
 
     return res.json(user);
   }
 
   async updateUser(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
     const {
-      id, name, email, password,
+      name, username, email, password,
     } = req.body;
     const user = await userService.updateUser({
-      id, name, email, password,
+      name, username, email, password,
     });
 
     return res.json(user);
   }
+
+/*   async authenticate(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
+    const { email, password } = req.body;
+
+    const token = await userService.authenticate(email, password);
+
+    return res.json(token);
+  } */
 }
 
 export default new UserController();
