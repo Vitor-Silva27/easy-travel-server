@@ -13,8 +13,8 @@ class UserRepository {
       return user;
     }
 
-    async exists(email: string): Promise<boolean> {
-      const user = this.users.some((existingUser) => existingUser.email === email);
+    async exists(username: string): Promise<boolean> {
+      const user = this.users.some((existingUser) => existingUser.username === username);
       return user;
     }
 

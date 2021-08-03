@@ -1,3 +1,5 @@
+import { compare } from 'bcryptjs';
+import { sign } from 'jsonwebtoken';
 import IUsersRepository from '../repositories/IUserRepository';
 import User from '../UserEntity';
 
@@ -9,7 +11,7 @@ class UserService {
   async createUser({
     name, username, email, password,
   }: User): Promise<User | string> {
-    const userAlreadyExists = await this.repository.exists(email);
+    const userAlreadyExists = await this.repository.exists(username);
 
     if (userAlreadyExists) {
       return 'User already exists!';
@@ -41,9 +43,28 @@ class UserService {
     return res;
   }
 
-/*   async authenticate(username: string, password: string): Promise<User> {
-    const userExists = await this.repository.exists();
-  } */
+  async authenticate(username: string, password: string): Promise<string> {
+
+    const userExists = await this.repository.exists(username);
+
+    const user = await this.repository.findOneUser(username);
+
+    if (!userExists) {
+      return 'username or password is wrong!';
+    }
+
+    const passwordMatch = await compare(password, user.password);
+
+    if (!passwordMatch) {
+      return 'username or password is wrong!';
+    }
+    const token = sign({}, process.env.TOKEN_KEY, {
+      subject: user.username,
+      expiresIn: '20s',
+    });
+
+    return token;
+  }
 }
 
 export default UserService;

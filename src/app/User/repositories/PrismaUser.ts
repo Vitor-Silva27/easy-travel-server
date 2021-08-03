@@ -19,10 +19,10 @@ class PrismaUserRepository implements IUsersRepository {
     return user;
   }
 
-  async exists(email: string): Promise<boolean> {
+  async exists(username: string): Promise<boolean> {
     const userExists = await prisma.user.findUnique({
       where: {
-        email,
+        username,
       },
     });
     return !!userExists;

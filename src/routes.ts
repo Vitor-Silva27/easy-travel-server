@@ -12,5 +12,6 @@ routes.post('/users', userController.create);
 routes.get('/users', userController.findAllUsers);
 routes.get('/user/:username', userController.findOneUser);
 routes.delete('/user/:username', userController.deleteUser);
+routes.post('/users/login', userController.authenticate);
 
 export default routes;

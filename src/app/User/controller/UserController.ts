@@ -47,13 +47,13 @@ class UserController {
     return res.json(user);
   }
 
-/*   async authenticate(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
-    const { email, password } = req.body;
+  async authenticate(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
+    const { username, password } = req.body;
 
-    const token = await userService.authenticate(email, password);
+    const token = await userService.authenticate(username, password);
 
     return res.json(token);
-  } */
+  }
 }
 
 export default new UserController();
