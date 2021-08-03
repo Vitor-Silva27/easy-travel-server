@@ -33,10 +33,9 @@ class UserRepository {
       return user[0];
     }
 
-    async updateUser(username: string, email: string, name:string): Promise<User> {
+    async updateUser(name:string, username: string, email: string): Promise<User> {
       const userSelected = this.users.find((user) => user.username === username);
       const index = this.users.indexOf(userSelected);
-      this.users[index].username = username;
       this.users[index].email = email;
       this.users[index].name = name;
       const user = this.users[index];

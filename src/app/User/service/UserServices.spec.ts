@@ -41,4 +41,42 @@ describe('User Services', () => {
     const users = userService.findUsers();
     expect(typeof (users)).toEqual('object');
   });
+
+  it('should find a user', async () => {
+    const userData: User = {
+      name: 'test name',
+      username: 'testuser',
+      email: 'test@test.com',
+      password: '123456',
+    };
+    await userService.createUser(userData);
+    const users = await userService.findOneUser(userData.username);
+    expect(users.email).toEqual(userData.email);
+  });
+
+  it('should delete a user', async () => {
+    const userData: User = {
+      name: 'test name',
+      username: 'testuser',
+      email: 'test@test.com',
+      password: '123456',
+    };
+    await userService.createUser(userData);
+    const users = await userService.deleteUser(userData.username);
+    const usersDeleted = await userService.findOneUser(users.username);
+    expect(usersDeleted).toEqual(undefined);
+  });
+
+  it('should update a user', async () => {
+    const userData: User = {
+      name: 'test name',
+      username: 'testuser',
+      email: 'test@test.com',
+      password: '123456',
+    };
+    await userService.createUser(userData);
+    await userService.updateUser('outro-nome', userData.username, userData.email);
+    const updatedUser = await userService.findOneUser(userData.username);
+    expect(updatedUser.name).toEqual('outro-nome');
+  });
 });
