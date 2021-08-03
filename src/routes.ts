@@ -7,6 +7,7 @@ routes.get('/', (req, res) => {
   res.json({ message: 'Hello' });
 });
 
+// user routes
 routes.post('/users', userController.create);
 routes.get('/users', userController.findAllUsers);
 routes.get('/user/:id', userController.findUserById);

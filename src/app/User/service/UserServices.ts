@@ -2,7 +2,6 @@ import IUsersRepository from '../repositories/IUserRepository';
 import User from '../UserEntity';
 
 class UserService {
-  // eslint-disable-next-line no-useless-constructor
   constructor(private repository: IUsersRepository) {
     this.repository = repository;
   }
@@ -31,6 +30,11 @@ class UserService {
   async deleteUser(id: string): Promise<User> {
     const user = await this.repository.deleteUser(id);
     return user;
+  }
+
+  async updateUser({ id, name, email }: User): Promise<User> {
+    const res = await this.repository.updateUser(id, name, email);
+    return res;
   }
 }
 

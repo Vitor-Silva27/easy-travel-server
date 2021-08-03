@@ -3,11 +3,12 @@ import User from '../UserEntity';
 
 interface IUsersRepository {
   create(user: User): Promise<User>;
-  exists(email: string): Promise<boolean>;
   findAllUsers(): Promise<User[]>;
   findUserById(id: string): Promise<User>;
+  updateUser(id: string, name: string, email: string): Promise<User>;
   deleteUser(id: string): Promise<User>;
-  updateUser(user: User): Promise<User>;
+  exists(email: string): Promise<boolean>;
+  authenticate(name: string, password: string);
 }
 
 export default IUsersRepository;
