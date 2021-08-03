@@ -32,6 +32,15 @@ class UserRepository {
       const user = this.users.splice(index, 1);
       return user[0];
     }
+
+    async updateUser({ id, email, name }: User): Promise<User> {
+      const userSelected = this.users.find((user) => user.id === id);
+      const index = this.users.indexOf(userSelected);
+      this.users[index].email = email;
+      this.users[index].name = name;
+      const user = this.users[index];
+      return user[0];
+    }
 }
 
 export default UserRepository;

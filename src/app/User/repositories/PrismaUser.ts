@@ -1,14 +1,16 @@
+import { hashSync } from 'bcryptjs';
 import User from '../UserEntity';
 import IUsersRepository from './IUserRepository';
 import prisma from '../../../database/client';
 
 class PrismaUserRepository implements IUsersRepository {
   async create({ name, email, password }: User): Promise<User> {
+    const passwordHash = await this.hashPassword(password);
     const user = prisma.user.create({
       data: {
         name,
         email,
-        password,
+        password: passwordHash,
       },
     });
     return user;
@@ -44,6 +46,24 @@ class PrismaUserRepository implements IUsersRepository {
       },
     });
     return user;
+  }
+
+  async updateUser({ id, name, email }: User): Promise<User> {
+    const user = await prisma.user.update({
+      where: {
+        id,
+      },
+      data: {
+        name,
+        email,
+      },
+    });
+    return user;
+  }
+
+  private async hashPassword(password: string): Promise<string> {
+    const hash = hashSync(password, 10);
+    return hash;
   }
 }
 

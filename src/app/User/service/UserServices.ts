@@ -1,4 +1,3 @@
-import { hashSync } from 'bcryptjs';
 import IUsersRepository from '../repositories/IUserRepository';
 import User from '../UserEntity';
 
@@ -14,9 +13,8 @@ class UserService {
     if (userAlreadyExists) {
       return 'User already exists!';
     }
-    const passwordHash = await this.hashPassword(password);
 
-    const user = await this.repository.create({ name, email, password: passwordHash });
+    const user = await this.repository.create({ name, email, password });
     return user;
   }
 
@@ -33,11 +31,6 @@ class UserService {
   async deleteUser(id: string): Promise<User> {
     const user = await this.repository.deleteUser(id);
     return user;
-  }
-
-  private async hashPassword(password: string): Promise<string> {
-    const hash = hashSync(password, 10);
-    return hash;
   }
 }
 
