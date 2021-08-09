@@ -9,10 +9,10 @@ class UserService {
     this.repository = repository;
   }
 
-  async createUser({ name, username, email, password }: User): Promise<User | string> {
+  async createUser({ name, username, email, password }: User): Promise<User | Error> {
     const userAlreadyExists = await this.repository.exists(username);
 
-    if (userAlreadyExists) return 'User already exists!';
+    if (userAlreadyExists) return new Error('User already exists!');
 
     const user = await this.repository.create({
       name, username, email, password,
@@ -40,15 +40,15 @@ class UserService {
     return res;
   }
 
-  async authenticate(username: string, password: string): Promise<string> {
+  async authenticate(username: string, password: string): Promise<string | Error> {
     const userExists = await this.repository.exists(username);
 
-    if (!userExists) return 'username or password is wrong!';
+    if (!userExists) return new Error('username or password is wrong!');
 
     const user = await this.repository.findOneUser(username);
     const passwordMatch = await compare(password, user.password);
 
-    if (!passwordMatch) return 'username or password is wrong!';
+    if (!passwordMatch) return new Error('username or password is wrong!');
 
     const token = this.signToken(user.username);
 

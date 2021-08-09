@@ -4,10 +4,9 @@ import IUsersRepository from './IUserRepository';
 import prisma from '../../../database/client';
 
 class PrismaUserRepository implements IUsersRepository {
-  async create({
-    name, username, email, password,
-  }: User): Promise<User> {
+  async create({ name, username, email, password }: User): Promise<User> {
     const passwordHash = await this.hashPassword(password);
+
     const user = prisma.user.create({
       data: {
         name,

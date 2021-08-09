@@ -34,7 +34,7 @@ describe('User Services', () => {
     };
     await userService.createUser(userData);
 
-    expect(await userService.createUser(userData)).toEqual('User already exists!');
+    expect(await userService.createUser(userData)).toEqual(new Error('User already exists!'));
   });
 
   it('should return an array of users', async () => {

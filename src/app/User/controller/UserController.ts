@@ -1,4 +1,3 @@
-/* eslint-disable object-curly-newline */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
 import UserService from '../service/UserServices';
@@ -15,8 +14,9 @@ class UserController {
       email,
       password,
     });
-    if (user === 'User already exists!') {
-      return res.status(401).json({ error: user });
+
+    if (user instanceof Error) {
+      return res.status(409).json({ error: user.message });
     }
     return res.json(user);
   }
@@ -53,8 +53,8 @@ class UserController {
 
     const token = await userService.authenticate(username, password);
 
-    if (token === 'username or password is wrong!') {
-      return res.status(401).json({ error: token });
+    if (token instanceof Error) {
+      return res.status(401).json({ error: token.message });
     }
     return res.json(token);
   }
