@@ -1,3 +1,4 @@
+/* eslint-disable object-curly-newline */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Request, Response } from 'express';
 import UserService from '../service/UserServices';
@@ -6,9 +7,7 @@ import prismaUser from '../repositories/PrismaUser';
 const userService = new UserService(prismaUser);
 class UserController {
   async create(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
-    const {
-      name, username, email, password,
-    } = req.body;
+    const { name, username, email, password } = req.body;
 
     const user = await userService.createUser({
       name,
@@ -16,7 +15,9 @@ class UserController {
       email,
       password,
     });
-
+    if (user === 'User already exists!') {
+      return res.status(401).json({ error: user });
+    }
     return res.json(user);
   }
 
@@ -52,6 +53,9 @@ class UserController {
 
     const token = await userService.authenticate(username, password);
 
+    if (token === 'username or password is wrong!') {
+      return res.status(401).json({ error: token });
+    }
     return res.json(token);
   }
 }

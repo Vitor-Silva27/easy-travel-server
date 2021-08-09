@@ -4,8 +4,7 @@ node_modules
 /coverage/
 coverage
 # Keep environment variables out of version control
-<<<<<<< HEAD
 .env
-=======
-.env
->>>>>>> parent of e613704 (passed test for create a user)
+
+TODO.md
+
