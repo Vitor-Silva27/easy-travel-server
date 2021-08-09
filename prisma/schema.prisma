@@ -29,7 +29,8 @@ model Agency {
 }
 
 model Trip {
-  name           String   @id   @default(uuid())
+  id             String   @id   @default(uuid())
+  name           String
   description    String
   value          Float
   agency         Agency   @relation(fields: [owner_agency], references: [agency_id])
