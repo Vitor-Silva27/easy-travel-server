@@ -1,28 +1,26 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
-import express, { NextFunction, Response, Request } from 'express';
+import express from 'express';
 import routes from './routes';
-
-import 'express-async-errors';
 
 import 'dotenv/config';
 
 class App {
-  public express: express.Application;
+  public app: express.Application;
 
   public constructor() {
-    this.express = express();
+    this.app = express();
     this.middlewares();
     this.routes();
   }
 
   private middlewares(): void {
-    this.express.use(express.json());
+    this.app.use(express.json());
   }
 
   private routes(): void {
-    this.express.use(routes);
+    this.app.use(routes);
   }
 }
 
-export default new App().express;
+export default new App().app;

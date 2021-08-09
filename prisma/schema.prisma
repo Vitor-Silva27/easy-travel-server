@@ -17,3 +17,23 @@ model User {
 
   @@map("users")
 }
+
+model Agency {
+  agency_id         String    @id    @default(uuid())
+  agency_name       String    @unique
+  email             String    @unique
+  password          String
+  travel_packages   Trip[]
+
+  @@map("agencies")
+}
+
+model Trip {
+  name           String   @id   @default(uuid())
+  description    String
+  value          Float
+  agency         Agency   @relation(fields: [owner_agency], references: [agency_id])
+  owner_agency   String
+
+  @@map("trips")
+}
