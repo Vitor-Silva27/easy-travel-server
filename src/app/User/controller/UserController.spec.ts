@@ -45,6 +45,49 @@ describe('Create User Controller', () => {
     expect(response.status).toBe(409);
   });
 
+  it('Should find One user', async () => {
+    await request(app).post('/users').send({
+      name: 'Test Integration',
+      username: 'test-integration',
+      email: 'testIntegration@test.com.br',
+      password: '1234567',
+    });
+
+    const response = await request(app).get('/user/test-integration');
+    expect(response.status).toBe(200);
+    expect(response.body).toHaveProperty('email');
+  });
+
+  it('Should delete a user', async () => {
+    await request(app).post('/users').send({
+      name: 'Test Integration',
+      username: 'test-integration',
+      email: 'testIntegration@test.com.br',
+      password: '1234567',
+    });
+    const response = await request(app).delete('/user/test-integration');
+    expect(response.status).toBe(200);
+  });
+
+  it('Should update a user', async () => {
+    const user = await request(app).post('/users').send({
+      name: 'Test Integration',
+      username: 'test-integration',
+      email: 'testIntegration@test.com.br',
+      password: '1234567',
+    });
+
+    const response = await request(app).put(`/user/${user.body.id}`).send({
+      id: user.body.id,
+      name: 'another test',
+      username: 'test-integration',
+      email: 'testIntegration@test.com.br',
+    });
+
+    expect(response.status).toBe(200);
+    expect(response.body.name).toEqual('another test');
+  });
+
   it('Should find all users', async () => {
     const response = await request(app).get('/users');
     expect(response.status).toBe(200);

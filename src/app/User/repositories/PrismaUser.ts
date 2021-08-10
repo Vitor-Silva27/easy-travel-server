@@ -51,14 +51,15 @@ class PrismaUserRepository implements IUsersRepository {
   }
 
   // modify this method later
-  async updateUser(name: string, username: string, email: string): Promise<User> {
+  async updateUser(id:string, name: string, username: string, email: string): Promise<User> {
     const user = await prisma.user.update({
       where: {
-        username,
+        id,
       },
       data: {
         name,
         email,
+        username,
       },
     });
     return user;

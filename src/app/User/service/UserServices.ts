@@ -38,8 +38,8 @@ class UserService {
     return user;
   }
 
-  async updateUser(name: string, username: string, email: string): Promise<User> {
-    const res = await this.repository.updateUser(name, username, email);
+  async updateUser(id: string, name: string, username: string, email: string): Promise<User> {
+    const res = await this.repository.updateUser(id, name, username, email);
     return res;
   }
 

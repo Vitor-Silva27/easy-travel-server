@@ -66,17 +66,4 @@ describe('User Services', () => {
     const usersDeleted = await userService.findOneUser(users.username);
     expect(usersDeleted).toEqual(new Error('User does not exists!'));
   });
-
-  it('should update a user', async () => {
-    const userData: User = {
-      name: 'test name',
-      username: 'testuser',
-      email: 'test@test.com',
-      password: '123456',
-    };
-    await userService.createUser(userData);
-    await userService.updateUser('outro-nome', userData.username, userData.email);
-    const updatedUser = await userService.findOneUser(userData.username);
-    expect(updatedUser.name).toEqual('outro-nome');
-  });
 });
