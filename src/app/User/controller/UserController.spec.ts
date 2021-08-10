@@ -2,7 +2,7 @@ import request from 'supertest';
 import app from '../../../app';
 import prisma from '../../../database/client';
 
-describe('Create User Controller', () => {
+describe('User Controller', () => {
   afterEach(async () => {
     const deleteUsers = prisma.user.deleteMany();
 

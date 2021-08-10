@@ -18,10 +18,17 @@ class PrismaUserRepository implements IUsersRepository {
     return user;
   }
 
-  async exists(username: string): Promise<boolean> {
-    const userExists = await prisma.user.findUnique({
+  async exists(identifier: string): Promise<boolean> {
+    const userExists = await prisma.user.findFirst({
       where: {
-        username,
+        OR: [
+          {
+            email: identifier,
+          },
+          {
+            username: identifier,
+          },
+        ],
       },
     });
     return !!userExists;
@@ -50,7 +57,6 @@ class PrismaUserRepository implements IUsersRepository {
     return user;
   }
 
-  // modify this method later
   async updateUser(id:string, name: string, username: string, email: string): Promise<User> {
     const user = await prisma.user.update({
       where: {

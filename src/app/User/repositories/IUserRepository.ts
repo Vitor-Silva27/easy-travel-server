@@ -7,7 +7,7 @@ interface IUsersRepository {
   findOneUser(username: string): Promise<User>;
   updateUser(id: string, name: string, username: string, email: string): Promise<User>;
   deleteUser(id: string): Promise<User>;
-  exists(username: string): Promise<boolean>;
+  exists(identifier: string): Promise<boolean>;
 }
 
 export default IUsersRepository;

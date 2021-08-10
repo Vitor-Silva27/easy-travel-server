@@ -10,7 +10,7 @@ class UserService {
   }
 
   async createUser({ name, username, email, password }: User): Promise<User | Error> {
-    const userAlreadyExists = await this.repository.exists(username);
+    const userAlreadyExists = await this.repository.exists(email);
 
     if (userAlreadyExists) return new Error('User already exists!');
 
