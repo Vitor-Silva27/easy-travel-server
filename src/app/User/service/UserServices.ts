@@ -25,8 +25,11 @@ class UserService {
     return users;
   }
 
-  async findOneUser(username: string): Promise<User> {
+  async findOneUser(username: string): Promise<User | Error> {
     const user = await this.repository.findOneUser(username);
+
+    if (!user) return new Error('User does not exists!');
+
     return user;
   }
 

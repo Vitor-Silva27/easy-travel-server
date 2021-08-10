@@ -6,7 +6,7 @@
   "scripts": {
     "migrate:init": "yarn prisma migrate dev --name init",
     "dev": "nodemon",
-    "test": "jest"
+    "test": "dotenv -e .env.test yarn migrate:init && jest"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",

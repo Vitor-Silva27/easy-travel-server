@@ -17,7 +17,7 @@ export default {
   clearMocks: true,
 
   // Indicates whether the coverage information should be collected while executing the test
-  //collectCoverage: true,
+  // collectCoverage: true,
 
   // An array of glob patterns indicating a set of files
   // collectCoverageFrom: undefined,
@@ -131,7 +131,7 @@ export default {
   // setupFilesAfterEnv: [],
 
   // The number of seconds after which a test is considered as slow.
-  // slowTestThreshold: 5,
+  slowTestThreshold: 15,
 
   // A list of paths to snapshot serializer modules Jest should use for snapshot testing
   // snapshotSerializers: [],

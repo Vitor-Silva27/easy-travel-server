@@ -51,7 +51,7 @@ describe('User Services', () => {
     };
     await userService.createUser(userData);
     const users = await userService.findOneUser(userData.username);
-    expect(users.email).toEqual(userData.email);
+    expect(users.name).toEqual(userData.name);
   });
 
   it('should delete a user', async () => {
@@ -64,7 +64,7 @@ describe('User Services', () => {
     await userService.createUser(userData);
     const users = await userService.deleteUser(userData.username);
     const usersDeleted = await userService.findOneUser(users.username);
-    expect(usersDeleted).toEqual(undefined);
+    expect(usersDeleted).toEqual(new Error('User does not exists!'));
   });
 
   it('should update a user', async () => {
