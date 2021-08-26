@@ -6,10 +6,11 @@
   "scripts": {
     "migrate:init": "yarn prisma migrate dev --name init",
     "dev": "nodemon",
-    "test": "dotenv -e .env.test yarn migrate:init && jest"
+    "test": "jest"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
+    "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/jest": "^26.0.24",
     "@types/jsonwebtoken": "^8.5.4",
@@ -32,6 +33,7 @@
   "dependencies": {
     "@prisma/client": "^2.28.0",
     "bcryptjs": "^2.4.3",
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "dotenv-cli": "^4.0.0",
     "express": "^4.17.1",

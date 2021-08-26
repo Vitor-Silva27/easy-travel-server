@@ -53,15 +53,19 @@ class UserService {
 
     if (!passwordMatch) return new Error('username or password is wrong!');
 
-    const token = this.signToken(user.username);
+    const token = this.signToken(user.username, user.id, user.email);
 
     return token;
   }
 
-  private async signToken(username: string) {
-    const token = sign({}, process.env.TOKEN_KEY, {
+  private async signToken(username: string, id: string, email: string) {
+    const token = sign({
+      username,
+      email,
+      id,
+    }, process.env.TOKEN_KEY, {
       subject: username,
-      expiresIn: '20s',
+      expiresIn: '60s',
     });
 
     return token;

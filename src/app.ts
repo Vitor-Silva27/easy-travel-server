@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
 import express from 'express';
+import cors from 'cors';
 import routes from './routes';
-
 import 'dotenv/config';
 
 class App {
@@ -16,6 +16,7 @@ class App {
 
   private middlewares(): void {
     this.app.use(express.json());
+    this.app.use(cors());
   }
 
   private routes(): void {
