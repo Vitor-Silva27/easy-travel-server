@@ -18,6 +18,11 @@ class PrismaAgencyRepository implements IAgencyRepository {
     return agency;
   }
 
+  async findAllAgencies(): Promise<Agency[]> {
+    const agency = await prisma.agency.findMany();
+    return agency;
+  }
+
   /*   async updateAgency({ id, name, email }: Agency): Promise<Agency> {
 
   }
