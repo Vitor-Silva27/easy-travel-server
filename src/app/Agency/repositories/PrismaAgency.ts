@@ -19,7 +19,11 @@ class PrismaAgencyRepository implements IAgencyRepository {
   }
 
   async findAllAgencies(): Promise<Agency[]> {
-    const agency = await prisma.agency.findMany();
+    const agency = await prisma.agency.findMany({
+      include: {
+        travel_packages: true,
+      },
+    });
     return agency;
   }
 

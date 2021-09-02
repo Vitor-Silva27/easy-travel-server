@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import agencyController from './app/Agency/controller/AgencyController';
+import TripController from './app/Trip/controller/TripController';
 import userController from './app/User/controller/UserController';
 
 const routes = Router();
@@ -19,5 +20,8 @@ routes.post('/users/login', userController.authenticate);
 // agency routes
 routes.post('/agencies', agencyController.create);
 routes.get('/agencies', agencyController.findAllAgencies);
+
+// trip routes
+routes.post('/trips', TripController.create);
 
 export default routes;

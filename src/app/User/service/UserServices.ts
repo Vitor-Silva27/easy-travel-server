@@ -53,16 +53,16 @@ class UserService {
 
     if (!passwordMatch) return new Error('username or password is wrong!');
 
-    const token = this.signToken(user.username, user.id, user.email);
+    const token = this.signToken(user.username, user.id, user.isAdmin);
 
     return token;
   }
 
-  private async signToken(username: string, id: string, email: string) {
+  private async signToken(username: string, id: string, isAdmin: boolean) {
     const token = sign({
       username,
-      email,
       id,
+      isAdmin,
     }, process.env.TOKEN_KEY, {
       subject: username,
       expiresIn: '60s',
