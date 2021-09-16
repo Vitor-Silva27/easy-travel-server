@@ -52,12 +52,12 @@ class UserController {
   async authenticate(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
     const { username, password } = req.body;
 
-    const token = await userService.authenticate(username, password);
+    const response = await userService.authenticate(username, password);
 
-    if (token instanceof Error) {
-      return res.status(401).json({ error: token.message });
+    if (response instanceof Error) {
+      return res.status(401).json({ error: response.message });
     }
-    return res.json(token);
+    return res.json(response);
   }
 }
 

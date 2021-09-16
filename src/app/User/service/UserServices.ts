@@ -4,6 +4,16 @@ import { sign } from 'jsonwebtoken';
 import IUsersRepository from '../repositories/IUserRepository';
 import User from '../UserEntity';
 
+interface UserData {
+  name: string;
+  id: string;
+  isAdmin: boolean;
+}
+
+interface AuthResponse {
+  user: UserData;
+  token: string;
+}
 class UserService {
   constructor(private repository: IUsersRepository) {
     this.repository = repository;
@@ -43,7 +53,7 @@ class UserService {
     return res;
   }
 
-  async authenticate(username: string, password: string): Promise<string | Error> {
+  async authenticate(username: string, password: string): Promise<AuthResponse | Error> {
     const userExists = await this.repository.exists(username);
 
     if (!userExists) return new Error('username or password is wrong!');
@@ -53,9 +63,15 @@ class UserService {
 
     if (!passwordMatch) return new Error('username or password is wrong!');
 
-    const token = this.signToken(user.username, user.id, user.isAdmin);
-
-    return token;
+    const token = await this.signToken(user.username, user.id, user.is_admin);
+    return {
+      user: {
+        name: user.name,
+        id: user.id,
+        isAdmin: user.is_admin,
+      },
+      token,
+    };
   }
 
   private async signToken(username: string, id: string, isAdmin: boolean) {
