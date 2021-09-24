@@ -22,8 +22,8 @@ class TripServices {
     return trip;
   }
 
-  async findTrips(): Promise<Trip[]> {
-    const trips = await this.repository.findAllTrips();
+  async findTrips(page: number, limit: number): Promise<Trip[]> {
+    const trips = await this.repository.findAllTrips(page, limit);
     return trips;
   }
 

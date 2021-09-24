@@ -29,10 +29,16 @@ class PrismaTripRepository implements ITripRepository {
     return image;
   }
 
-  async findAllTrips(): Promise<Trip[]> {
+  async findAllTrips(page: number, limit: number): Promise<Trip[]> {
+    const skip = (page - 1) * limit;
     const trips = await prisma.trip.findMany({
+      skip,
+      take: limit,
       include: {
         images: true,
+      },
+      orderBy: {
+        created_at: 'desc',
       },
     });
     return trips;

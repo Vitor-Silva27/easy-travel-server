@@ -21,7 +21,10 @@ class TripController {
   }
 
   async findAllTrips(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
-    const trips = await tripServices.findTrips();
+    const page = +req.query.page || 1;
+    const limit = +req.query.limit || 6;
+
+    const trips = await tripServices.findTrips(page, limit);
 
     return res.json(trips);
   }
