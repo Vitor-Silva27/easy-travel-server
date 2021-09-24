@@ -10,13 +10,13 @@ routes.get('/', (req, res) => {
   res.json({ message: 'Hello' });
 });
 
-// user routes
-routes.use(userRoutes);
+// trip routes
+routes.use(tripRoutes);
 
 // agency routes
 routes.use(agencyRoutes);
 
-// trip routes
-routes.use(tripRoutes);
+// user routes
+routes.use(userRoutes);
 
 export default routes;

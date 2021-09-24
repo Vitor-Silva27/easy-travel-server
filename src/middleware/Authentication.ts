@@ -4,18 +4,22 @@ import jwt from 'jsonwebtoken';
 
 const auth = async (req: Request, res: Response, next) => {
   const authHeader = req.headers.authorization;
-  const [, token] = authHeader.split(' ');
+  if (authHeader !== undefined) {
+    const [, token] = authHeader.split(' ');
 
-  if (!token) {
-    return res.status(401).json({ error: 'Token is missing' });
-  }
+    if (!token) {
+      return res.status(401).json({ error: 'Token is missing' });
+    }
 
-  try {
-    const decode = jwt.verify(token, process.env.TOKEN_KEY);
-    console.log(decode);
-    return next();
-  } catch (err) {
-    return res.status(401).json({ error: ' invalid token' });
+    try {
+      const decode = jwt.verify(token, process.env.TOKEN_KEY);
+      console.log(decode);
+      return next();
+    } catch (err) {
+      return res.status(401).json({ error: ' invalid token' });
+    }
+  } else {
+    return res.status(401).json({ error: 'token is missing' });
   }
 };
 

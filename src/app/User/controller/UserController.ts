@@ -59,6 +59,19 @@ class UserController {
     }
     return res.json(response);
   }
+
+  async recoverUserInfo(req: Request, res:Response): Promise<Response<any, Record<string, any>>> {
+    const authHeader = req.headers.authorization;
+
+    const [, token] = authHeader.split(' ');
+
+    const user = await userService.recoverUserInfo(token);
+
+    if (user) {
+      return res.json(user);
+    }
+    return res.status(401).json({ err: 'token is invalid' });
+  }
 }
 
 export default new UserController();

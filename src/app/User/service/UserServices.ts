@@ -1,13 +1,14 @@
+/* eslint-disable camelcase */
 /* eslint-disable object-curly-newline */
 import { compare } from 'bcryptjs';
-import { sign } from 'jsonwebtoken';
+import { sign, verify } from 'jsonwebtoken';
 import IUsersRepository from '../repositories/IUserRepository';
 import User from '../UserEntity';
 
 interface UserData {
-  name: string;
+  username: string;
   id: string;
-  isAdmin: boolean;
+  is_admin: boolean;
 }
 
 interface AuthResponse {
@@ -35,12 +36,16 @@ class UserService {
     return users;
   }
 
-  async findOneUser(username: string): Promise<User | Error> {
+  async findOneUser(username: string): Promise<UserData | Error> {
     const user = await this.repository.findOneUser(username);
-
+    const userData: UserData = {
+      id: user.id,
+      username: user.username,
+      is_admin: user.is_admin,
+    };
     if (!user) return new Error('User does not exists!');
 
-    return user;
+    return userData;
   }
 
   async deleteUser(username: string): Promise<User> {
@@ -63,25 +68,29 @@ class UserService {
 
     if (!passwordMatch) return new Error('username or password is wrong!');
 
-    const token = await this.signToken(user.username, user.id, user.is_admin);
+    const token = await this.signToken(user.username, user.id);
     return {
       user: {
-        name: user.name,
+        username: user.username,
         id: user.id,
-        isAdmin: user.is_admin,
+        is_admin: user.is_admin,
       },
       token,
     };
   }
 
-  private async signToken(username: string, id: string, isAdmin: boolean) {
+  async recoverUserInfo(token: string): Promise<UserData | Error> {
+    const data = verify(token, process.env.TOKEN_KEY);
+    const user = this.findOneUser(data.sub.toString());
+    return user;
+  }
+
+  private async signToken(username: string, id: string) {
     const token = sign({
-      username,
       id,
-      isAdmin,
     }, process.env.TOKEN_KEY, {
       subject: username,
-      expiresIn: '60s',
+      expiresIn: '3600s',
     });
 
     return token;

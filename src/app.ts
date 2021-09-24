@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable no-unused-vars */
 import express from 'express';
+import { resolve } from 'path';
 import cors from 'cors';
 import routes from './routes/index';
 import 'dotenv/config';
@@ -16,6 +17,7 @@ class App {
 
   private middlewares(): void {
     this.app.use(express.json());
+    this.app.use(express.static(resolve(__dirname, '..', 'uploads')));
     this.app.use(cors());
   }
 

@@ -5,14 +5,13 @@ import auth from '../middleware/Authentication';
 
 const userRoutes = Router();
 
+userRoutes.post('/users/login', userController.authenticate);
 userRoutes.post('/users', userController.create);
 userRoutes.get('/users', userController.findAllUsers);
-userRoutes.post('/users/login', userController.authenticate);
+userRoutes.get('/user/:username', auth, userController.findOneUser);
+userRoutes.get('/user', userController.recoverUserInfo);
 
-userRoutes.use(auth);
-
-userRoutes.get('/user/:username', userController.findOneUser);
-userRoutes.delete('/user/:username', userController.deleteUser);
-userRoutes.put('/user/:id', userController.updateUser);
+userRoutes.delete('/user/:username', auth, userController.deleteUser);
+userRoutes.put('/user/:id', auth, userController.updateUser);
 
 export default userRoutes;
