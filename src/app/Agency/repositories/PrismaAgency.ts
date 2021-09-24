@@ -27,6 +27,18 @@ class PrismaAgencyRepository implements IAgencyRepository {
     return agency;
   }
 
+  async findOneAgency(agencyName: string): Promise<Agency> {
+    const agency = await prisma.agency.findFirst({
+      where: {
+        agency_name: agencyName,
+      },
+      include: {
+        travel_packages: true,
+      },
+    });
+    return agency;
+  }
+
   /*   async updateAgency({ id, name, email }: Agency): Promise<Agency> {
 
   }

@@ -22,6 +22,17 @@ class AgencyController {
 
     return res.json(agencies);
   }
+
+  async authenticate(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
+    const { agencyName, password } = req.body;
+
+    const response = await agencyServices.authenticate(agencyName, password);
+
+    if (response instanceof Error) {
+      return res.status(401).json({ error: response.message });
+    }
+    return res.json(response);
+  }
 }
 
 export default new AgencyController();
