@@ -1,16 +1,21 @@
+/* eslint-disable max-len */
 /* eslint-disable camelcase */
 import Trip from '../TripEntity';
 import ITripRepository from './ITripRepository';
 import prisma from '../../../database/client';
 
 class PrismaTripRepository implements ITripRepository {
-  async create({ name, owner_agency, description, value } : Trip) {
+  async create({ name, owner_agency, description, value, date, duration, language, location } : Trip) {
     const trip = await prisma.trip.create({
       data: {
         name,
         description,
         value,
         owner_agency,
+        date,
+        duration,
+        language,
+        location,
       },
     });
     return trip;
@@ -27,6 +32,19 @@ class PrismaTripRepository implements ITripRepository {
       },
     });
     return image;
+  }
+
+  async findTripById(id: string): Promise<Trip> {
+    const trip = await prisma.trip.findFirst({
+      where: {
+        id,
+      },
+      include: {
+        images: true,
+        passengers: true,
+      },
+    });
+    return trip;
   }
 
   async findAllTrips(page: number, limit: number): Promise<Trip[]> {

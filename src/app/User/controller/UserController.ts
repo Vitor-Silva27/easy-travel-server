@@ -72,6 +72,14 @@ class UserController {
     }
     return res.status(401).json({ err: 'token is invalid' });
   }
+
+  async buyTrip(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
+    const { tripId, userId } = req.body;
+
+    const response = await userService.buyTrip(tripId, userId);
+
+    return res.json(response);
+  }
 }
 
 export default new UserController();

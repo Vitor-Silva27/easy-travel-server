@@ -2,6 +2,7 @@ import { hashSync } from 'bcryptjs';
 import User from '../UserEntity';
 import IUsersRepository from './IUserRepository';
 import prisma from '../../../database/client';
+import { PassengerOnTrip } from '.prisma/client';
 
 class PrismaUserRepository implements IUsersRepository {
   async create({ name, username, email, password }: User): Promise<User> {
@@ -62,6 +63,16 @@ class PrismaUserRepository implements IUsersRepository {
       },
     });
     return user;
+  }
+
+  async buyTrip(tripId: string, userId: string): Promise<PassengerOnTrip> {
+    const ticket = await prisma.passengerOnTrip.create({
+      data: {
+        trip_id: tripId,
+        user_id: userId,
+      },
+    });
+    return ticket;
   }
 
   async updateUser(id:string, name: string, username: string, email: string): Promise<User> {

@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable camelcase */
 import ITripRepository from '../repositories/ITripRepository';
 import Trip from '../TripEntity';
@@ -12,12 +13,16 @@ class TripServices {
     this.repository = repository;
   }
 
-  async create({ name, description, owner_agency, value }: Trip): Promise<Trip> {
+  async create({ name, description, owner_agency, value, date, duration, language, location }: Trip): Promise<Trip> {
     const trip = await this.repository.create({
       name,
       description,
       owner_agency,
       value,
+      date,
+      duration,
+      language,
+      location,
     });
     return trip;
   }
@@ -25,6 +30,11 @@ class TripServices {
   async findTrips(page: number, limit: number): Promise<Trip[]> {
     const trips = await this.repository.findAllTrips(page, limit);
     return trips;
+  }
+
+  async findTripById(id: string): Promise<Trip> {
+    const trip = await this.repository.findTripById(id);
+    return trip;
   }
 
   async addImage(originalname: string, filename: string, tripId: string): Promise<Image[]> {

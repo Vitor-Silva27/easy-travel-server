@@ -10,5 +10,8 @@ const tripRoutes = Router();
 
 tripRoutes.post('/trips', TripController.create);
 tripRoutes.post('/trip/images', upload.single('image'), TripController.addImage);
+
+tripRoutes.get('/trip/:id', TripController.findTripById);
 tripRoutes.get('/trips', TripController.findAllTrips);
+
 export default tripRoutes;

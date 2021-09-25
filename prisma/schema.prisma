@@ -8,12 +8,13 @@ generator client {
 }
 
 model User {
-  id         String    @id    @default(uuid())
-  name       String
-  username   String    @unique
-  email      String    @unique
-  password   String
-  is_admin   Boolean   @default(false)
+  id          String    @id    @default(uuid())
+  name        String
+  username    String    @unique
+  email       String    @unique
+  password    String
+  is_admin    Boolean   @default(false)
+  trips       PassengerOnTrip[]
   created_at  DateTime  @default(now())
   updated_at  DateTime  @updatedAt
 
@@ -35,13 +36,19 @@ model Agency {
 model Trip {
   id             String    @id   @default(uuid())
   name           String
-  description    String
+  description    String    
   value          Float
   agency         Agency    @relation(fields: [owner_agency], references: [agency_id])
   owner_agency   String
+  location       String
+  language       String
+  duration       String
+  date           DateTime
+  included       String[]
   images         Image[]
-  created_at      DateTime  @default(now())
-  updated_at      DateTime  @updatedAt
+  passengers     PassengerOnTrip[]
+  created_at     DateTime  @default(now())
+  updated_at     DateTime  @updatedAt
 
   @@map("trips")
 }
@@ -57,4 +64,15 @@ model Image {
   updated_at      DateTime  @updatedAt
 
   @@map("images")
+}
+
+model PassengerOnTrip {
+  trip         Trip     @relation(fields: [trip_id], references: [id])
+  trip_id      String // relation scalar field (used in the `@relation` attribute above)
+  user         User     @relation(fields: [user_id], references: [id])
+  user_id      String // relation scalar field (used in the `@relation` attribute above)
+  created_at   DateTime  @default(now())
+  updated_at   DateTime  @updatedAt
+
+  @@id([trip_id, user_id])
 }

@@ -2,6 +2,7 @@
 /* eslint-disable object-curly-newline */
 import { compare } from 'bcryptjs';
 import { sign, verify } from 'jsonwebtoken';
+import { PassengerOnTrip } from '.prisma/client';
 import IUsersRepository from '../repositories/IUserRepository';
 import User from '../UserEntity';
 
@@ -83,6 +84,12 @@ class UserService {
     const data = verify(token, process.env.TOKEN_KEY);
     const user = this.findOneUser(data.sub.toString());
     return user;
+  }
+
+  async buyTrip(tripId: string, userId: string): Promise<PassengerOnTrip> {
+    const res = await this.repository.buyTrip(tripId, userId);
+
+    return res;
   }
 
   private async signToken(username: string, id: string) {

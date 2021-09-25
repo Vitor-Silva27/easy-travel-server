@@ -14,4 +14,6 @@ userRoutes.get('/user', userController.recoverUserInfo);
 userRoutes.delete('/user/:username', auth, userController.deleteUser);
 userRoutes.put('/user/:id', auth, userController.updateUser);
 
+userRoutes.post('/user/buy', userController.buyTrip);
+
 export default userRoutes;
