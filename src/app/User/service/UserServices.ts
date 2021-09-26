@@ -6,10 +6,14 @@ import { PassengerOnTrip } from '.prisma/client';
 import IUsersRepository from '../repositories/IUserRepository';
 import User from '../UserEntity';
 
+interface TripData {
+  trip_id: string;
+}
 interface UserData {
   username: string;
   id: string;
   is_admin: boolean;
+  trips: TripData[];
 }
 
 interface AuthResponse {
@@ -43,6 +47,7 @@ class UserService {
       id: user.id,
       username: user.username,
       is_admin: user.is_admin,
+      trips: user.trips,
     };
     if (!user) return new Error('User does not exists!');
 
@@ -75,6 +80,7 @@ class UserService {
         username: user.username,
         id: user.id,
         is_admin: user.is_admin,
+        trips: user.trips,
       },
       token,
     };

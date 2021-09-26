@@ -1,4 +1,8 @@
 /* eslint-disable camelcase */
+
+interface TripData {
+    trip_id: string;
+}
 interface User {
     id?: string;
     name: string;
@@ -6,5 +10,6 @@ interface User {
     email:string;
     password:string;
     is_admin?: boolean;
+    trips?: TripData[];
 }
 export default User;

@@ -52,6 +52,9 @@ class PrismaUserRepository implements IUsersRepository {
           },
         ],
       },
+      include: {
+        trips: true,
+      },
     });
     return user;
   }
