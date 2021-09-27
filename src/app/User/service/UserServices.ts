@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable camelcase */
 /* eslint-disable object-curly-newline */
 import { compare } from 'bcryptjs';
@@ -54,12 +55,20 @@ class UserService {
     return userData;
   }
 
-  async deleteUser(username: string): Promise<User> {
+  async deleteUser(username: string): Promise<User | Error> {
+    const userExists = await this.repository.exists(username);
+
+    if (!userExists) return new Error('User does not exists!');
+
     const user = await this.repository.deleteUser(username);
     return user;
   }
 
-  async updateUser(id: string, name: string, username: string, email: string): Promise<User> {
+  async updateUser(id: string, name: string, username: string, email: string): Promise<User | Error> {
+    const userExists = await this.repository.exists(username);
+
+    if (!userExists) return new Error('User does not exists!');
+
     const res = await this.repository.updateUser(id, name, username, email);
     return res;
   }
@@ -92,7 +101,10 @@ class UserService {
     return user;
   }
 
-  async buyTrip(tripId: string, userId: string): Promise<PassengerOnTrip> {
+  async buyTrip(tripId: string, userId: string): Promise<PassengerOnTrip | Error> {
+    const user = await this.repository.findOneUser(userId);
+
+    if (user.trips.some((trip) => trip.trip_id === tripId)) return new Error('This trip was already bought');
     const res = await this.repository.buyTrip(tripId, userId);
 
     return res;

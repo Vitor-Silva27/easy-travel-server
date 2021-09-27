@@ -1,3 +1,4 @@
+/* eslint-disable max-len */
 /* eslint-disable camelcase */
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
@@ -28,6 +29,24 @@ class AgencyServices {
   async findAgencies(): Promise<Agency[]> {
     const agencies = await this.repository.findAllAgencies();
     return agencies;
+  }
+
+  async deleteAgency(id: string): Promise<Agency | Error> {
+    const agencyExists = await this.repository.exists(id);
+
+    if (!agencyExists) return new Error('Agency does not exists!');
+
+    const agency = await this.repository.deleteAgency(id);
+    return agency;
+  }
+
+  async updateAgency(agency_id: string, agency_name: string, email: string): Promise<Agency | Error> {
+    const agencyExists = await this.repository.exists(agency_id);
+
+    if (!agencyExists) return new Error('Agency does not exists!');
+
+    const res = await this.repository.updateAgency(agency_id, agency_name, email);
+    return res;
   }
 
   async authenticate(agencyName: string, password: string): Promise<AuthResponse | Error> {

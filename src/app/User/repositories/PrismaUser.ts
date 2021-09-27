@@ -50,6 +50,9 @@ class PrismaUserRepository implements IUsersRepository {
           {
             username: identifier,
           },
+          {
+            id: identifier,
+          },
         ],
       },
       include: {

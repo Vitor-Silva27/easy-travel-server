@@ -77,6 +77,9 @@ class UserController {
     const { tripId, userId } = req.body;
 
     const response = await userService.buyTrip(tripId, userId);
+    if (response instanceof Error) {
+      return res.status(401).json({ error: response.message });
+    }
 
     return res.json(response);
   }
