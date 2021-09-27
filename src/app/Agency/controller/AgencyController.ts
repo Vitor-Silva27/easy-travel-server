@@ -23,6 +23,28 @@ class AgencyController {
     return res.json(agencies);
   }
 
+  async findOneAgency(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
+    const { agencyName } = req.params;
+    const agencies = await agencyServices.findOneAgency(agencyName);
+
+    return res.json(agencies);
+  }
+
+  async deleteAgency(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
+    const { id } = req.params;
+    const agencies = await agencyServices.deleteAgency(id);
+
+    return res.json(agencies);
+  }
+
+  async updateAgency(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
+    const { id } = req.params;
+    const { agencyName, email } = req.body;
+    const agency = await agencyServices.updateAgency(id, agencyName, email);
+
+    return res.json(agency);
+  }
+
   async authenticate(req: Request, res: Response): Promise<Response<any, Record<string, any>>> {
     const { agencyName, password } = req.body;
 

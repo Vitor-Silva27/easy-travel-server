@@ -31,6 +31,15 @@ class AgencyServices {
     return agencies;
   }
 
+  async findOneAgency(agencyName: string): Promise<Agency | Error> {
+    const agencyExists = await this.repository.findOneAgency(agencyName);
+
+    if (!agencyExists) return new Error('This agency does not exists');
+
+    const agency = await this.repository.findOneAgency(agencyName);
+    return agency;
+  }
+
   async deleteAgency(id: string): Promise<Agency | Error> {
     const agencyExists = await this.repository.exists(id);
 
